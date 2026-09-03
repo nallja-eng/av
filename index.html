@@ -485,6 +485,86 @@ motor.<span class="fn">drive</span>(<span class="str">"left"</span>, 50)      <s
 motor.<span class="fn">drive</span>(<span class="str">"right"</span>, 50)     <span class="cm"># 우회전</span>
 motor.<span class="fn">drive</span>(<span class="str">"stop"</span>)          <span class="cm"># 정지</span>`
   },
+  {
+    id:'motor-mecanum', cat:'motor',
+    title:'motor.mecanum(방향번호, 속도)',
+    kor:'메카넘휠로 전방향 이동하기',
+    desc:'포니봇의 메카넘휠(비스듬한 롤러가 달린 특수 바퀴)을 이용해 옆으로 이동하거나 대각선으로 이동하는 등, 일반 바퀴로는 불가능한 방향까지 자유롭게 움직일 수 있습니다. 방향은 숫자 키패드처럼 1~9 번호로 지정합니다.',
+    params:[
+      {n:'7 (↖)', v:'좌상단 이동'},
+      {n:'8 (↑)', v:'전진'},
+      {n:'9 (↗)', v:'우상단 이동'},
+      {n:'4 (←)', v:'좌측 이동 (옆으로)'},
+      {n:'5 (■)', v:'정지'},
+      {n:'6 (→)', v:'우측 이동 (옆으로)'},
+      {n:'1 (↙)', v:'좌하단 이동'},
+      {n:'2 (↓)', v:'후진'},
+      {n:'3 (↘)', v:'우하단 이동'},
+      {n:'속도', v:'0~100 사이 정수'},
+    ],
+    code:
+`motor.<span class="fn">mecanum</span>(8, 100)  <span class="cm"># 전진</span>
+motor.<span class="fn">mecanum</span>(6, 100)  <span class="cm"># 우측으로 옆이동 (일반 바퀴로는 불가능)</span>
+motor.<span class="fn">mecanum</span>(7, 100)  <span class="cm"># 좌상단 대각선 이동</span>`,
+    note:'번호는 숫자 키패드(1~9) 배치와 같습니다: 왼쪽 열이 4·7·1, 가운데 열이 5·8·2, 오른쪽 열이 6·9·3 순서로 배치되어 있다고 생각하면 외우기 쉽습니다.'
+  },
+  {
+    id:'motor-mecanum-square',
+    cat:'motor',
+    title:'사각형 경로로 이동하기',
+    kor:'전진 → 우측 → 후진 → 좌측 순서로 이동',
+    desc:'방향번호 8·6·2·4를 순서대로 실행하면 포니봇이 사각형 모양의 경로를 그리며 이동합니다.',
+    params:[],
+    code:
+`motor.<span class="fn">mecanum</span>(8, 30)  <span class="cm"># 전진</span>
+sleep(1000)
+motor.<span class="fn">mecanum</span>(6, 30)  <span class="cm"># 우측 이동</span>
+sleep(1000)
+motor.<span class="fn">mecanum</span>(2, 30)  <span class="cm"># 후진</span>
+sleep(1000)
+motor.<span class="fn">mecanum</span>(4, 30)  <span class="cm"># 좌측 이동</span>
+sleep(1000)
+motor.<span class="fn">drive</span>(<span class="str">"stop"</span>)  <span class="cm"># 정지</span>`
+  },
+  {
+    id:'motor-mecanum-diagonal',
+    cat:'motor',
+    title:'대각선으로 이동하기',
+    kor:'네 방향 대각선을 차례로 이동',
+    desc:'방향번호 7·9·3·1을 순서대로 실행하면 대각선 네 방향으로 차례차례 이동합니다. 일반 바퀴로는 만들 수 없는 움직임입니다.',
+    params:[],
+    code:
+`motor.<span class="fn">mecanum</span>(7, 30)  <span class="cm"># 좌상단 이동</span>
+sleep(1000)
+motor.<span class="fn">mecanum</span>(9, 30)  <span class="cm"># 우상단 이동</span>
+sleep(1000)
+motor.<span class="fn">mecanum</span>(3, 30)  <span class="cm"># 우하단 이동</span>
+sleep(1000)
+motor.<span class="fn">mecanum</span>(1, 30)  <span class="cm"># 좌하단 이동</span>
+sleep(1000)
+motor.<span class="fn">drive</span>(<span class="str">"stop"</span>)`
+  },
+  {
+    id:'motor-mecanum-button',
+    cat:'motor',
+    title:'버튼으로 이동 패턴 실행하기',
+    kor:'A·B 버튼으로 서로 다른 이동 실행',
+    desc:'마이크로비트의 A·B 버튼을 눌러 각각 다른 메카넘휠 이동을 실행합니다. while True로 감싸면 버튼을 누를 때마다 계속 확인할 수 있습니다.',
+    params:[],
+    code:
+`<span class="kw">while</span> <span class="kw">True</span>:
+    <span class="kw">if</span> button_a.<span class="fn">was_pressed</span>():
+        display.<span class="fn">scroll</span>(<span class="str">'A'</span>)
+        motor.<span class="fn">mecanum</span>(8, 100)  <span class="cm"># 전진</span>
+        sleep(1000)
+        motor.<span class="fn">drive</span>(<span class="str">"stop"</span>)
+
+    <span class="kw">if</span> button_b.<span class="fn">was_pressed</span>():
+        display.<span class="fn">scroll</span>(<span class="str">'B'</span>)
+        motor.<span class="fn">mecanum</span>(6, 100)  <span class="cm"># 우측 이동</span>
+        sleep(1000)
+        motor.<span class="fn">drive</span>(<span class="str">"stop"</span>)`
+  },
 
   // ---------------- 서보모터 ----------------
   {
