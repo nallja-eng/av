@@ -26,7 +26,6 @@
     --warn-bg: #2a2013;
 
     --cat-motor: #c98a4b;
-    --cat-servo: #e0a458;
     --cat-oled: #5ec8d8;
     --cat-music: #b18af0;
     --cat-pin: #7aa8c9;
@@ -438,7 +437,6 @@
 ========================================================= */
 const CATEGORIES = [
   { id:'motor', label:'모터',        color:'var(--cat-motor)' },
-  { id:'servo', label:'서보모터',     color:'var(--cat-servo)' },
   { id:'oled',  label:'OLED',        color:'var(--cat-oled)'  },
   { id:'music', label:'사운드',       color:'var(--cat-music)' },
   { id:'pin',   label:'핀 제어(공통)', color:'var(--cat-pin)'   },
@@ -582,30 +580,6 @@ motor.<span class="fn">drive</span>(<span class="str">"stop"</span>)`
         motor.<span class="fn">mecanum</span>(6, 100)  <span class="cm"># 우측 이동</span>
         sleep(1000)
         motor.<span class="fn">drive</span>(<span class="str">"stop"</span>)`
-  },
-
-  // ---------------- 서보모터 ----------------
-  {
-    id:'servo-init', cat:'servo',
-    title:'PonyServo(i2c)',
-    kor:'서보모터 객체 만들기',
-    desc:'조향(방향 전환)에 쓰이는 서보모터 객체를 만듭니다.',
-    params:[],
-    code:
-`servo = <span class="fn">PonyServo</span>(i2c)  <span class="cm"># 서보모터 객체 초기화</span>`
-  },
-  {
-    id:'servo-angle', cat:'servo',
-    title:'servo.set_angle(번호, 각도)',
-    kor:'서보모터 각도 조절하기',
-    desc:'지정한 번호의 서보모터를 원하는 각도로 회전시킵니다. 반드시 서보 번호와 각도 두 값을 함께 넣어야 합니다.',
-    params:[
-      {n:'번호', v:'제어할 서보모터의 채널 번호'},
-      {n:'각도', v:'0~180 사이 각도 값'},
-    ],
-    code:
-`servo.<span class="fn">set_angle</span>(1, 90)   <span class="cm"># 1번 서보모터를 90도로 회전</span>`,
-    note:'서보모터의 현재 각도를 "읽어오는" 함수는 없습니다. 코드에서 직접 각도 값을 변수로 관리해야 합니다.'
   },
 
   // ---------------- OLED ----------------
